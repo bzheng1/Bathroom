@@ -28,7 +28,8 @@ class PersonConstructor extends Thread{
                     personEnters.acquire();
                 }else if (isOccupied == true && currentSex.equals("Male") && sex.equals("Female")){
                     womenWantsToEnter();
-
+                    incrementCount();
+                    personEnters.acquire();
                 }
             }
         } catch (InterruptedException e) {
@@ -40,13 +41,21 @@ class PersonConstructor extends Thread{
     public void womenWantsToEnter(){
         System.out.println("Women wants to enter.");
         try{
-
+            if(countm == 0){
+                personEnters.acquire();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
     public void manWantsToEnter(){
         System.out.println("Man wants to enter.");
         try{
-
+            if(countf == 0){
+                personEnters.acquire();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
     public void manLeaves(){
